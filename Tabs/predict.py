@@ -17,7 +17,7 @@ def app(df, X, y):
     st.markdown(
         """
             <p style="font-size:25px">
-                This app uses <b style="color:green">Long Short Term Memory and Recurrent Neural Networks</b> for the Coronary Thrombosis Prediction.
+                This app uses <b style="color:green">Random Forest and XGBoost</b> for the Coronary Thrombosis Prediction.
             </p>
         """, unsafe_allow_html=True)
     
