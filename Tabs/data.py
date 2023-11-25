@@ -45,4 +45,8 @@ def app(df):
             col = st.selectbox("Column Name", list(df.columns))
             st.dataframe(df[col])
 
-    
+    with st.expander("View Data Source"):
+
+        st.markdown('''Reference Datasets:''')
+        st.markdown('''https://www.kaggle.com/datasets/allanwandia/heart-disease''')
+        st.markdown('''https://www.kaggle.com/datasets/johnsmith88/heart-disease-dataset''')

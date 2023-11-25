@@ -6,9 +6,6 @@ import streamlit as st
 # Import necessary functions from web_functions
 from web_functions import load_data
 
-# Import pages
-from Tabs import home, data, predict, visualise
-
 # Configure the app
 st.set_page_config(
     page_title = 'Coronary Thrombosis Prediction',
@@ -17,10 +14,16 @@ st.set_page_config(
     initial_sidebar_state = 'auto'
 )
 
+# Import pages
+from Tabs import home, data, ecg_generate, predict, visualise
+
+
+
 # Dictionary for pages
 Tabs = {
     "Home": home,
     "Data Info": data,
+    "Generate ECG":ecg_generate,
     "Prediction": predict,
     "Visualisation": visualise
     

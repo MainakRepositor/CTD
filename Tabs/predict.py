@@ -1,11 +1,20 @@
 """This modules contains data about prediction page"""
-
+import pandas as pd
 # Import necessary modules
 import streamlit as st
+import streamlit.components.v1 as components
 
 # Import necessary functions from web_functions
 from web_functions import predict
 
+hide_st_style = """
+<style>
+MainMenu {visibility:hidden;}
+footer {visibility:hidden;}
+header {visibility:hidden;}
+</style>
+"""
+st.markdown(hide_st_style, unsafe_allow_html=True)
 
 def app(df, X, y):
     """This function create the prediction page"""
@@ -28,17 +37,16 @@ def app(df, X, y):
     # Take input of features from the user.
     age = st.slider("Age", int(df["age"].min()), int(df["age"].max()))
     gen = st.slider("Gender", int(df["sex"].min()), int(df["sex"].max()))
-    cp = st.slider("CP", int(df["cp"].min()), int(df["cp"].max()))
+    cp = st.slider("Chest Pain Intensity", int(df["cp"].min()), int(df["cp"].max()))
     chol = st.slider("Cholesterol Level", float(df["chol"].min()), float(df["chol"].max()))
-    fbs = st.slider("FBS", float(df["fbs"].min()), float(df["fbs"].max()))
-    restecg = st.slider("Rest ECG", float(df["restecg"].min()), float(df["restecg"].max()))
-    thalach = st.slider("Thalach", int(df["thalach"].min()), int(df["thalach"].max()))
-    exang = st.slider("Exang", int(df["exang"].min()), int(df["exang"].max()))
+    fbs = st.slider("Fasting Blood Sugar", float(df["fbs"].min()), float(df["fbs"].max()))
+    thalach = st.slider("Max Heart Rate", int(df["thalach"].min()), int(df["thalach"].max()))
+    exang = st.slider("Exercise Induced Angina", int(df["exang"].min()), int(df["exang"].max()))
     slope = st.slider("Slope", int(df["slope"].min()), int(df["slope"].max()))
-    oldpeak = st.slider("Oldpeak", int(df["oldpeak"].min()), int(df["oldpeak"].max()))
-    ca = st.slider("CA", int(df["ca"].min()), int(df["ca"].max()))
-    thal = st.slider("Thal", int(df["thal"].min()), int(df["thal"].max()))
-    anemia = st.slider("Animea", int(df["anaemia"].min()), int(df["anaemia"].max()))
+    oldpeak = st.slider("Rest induced value dip", int(df["oldpeak"].min()), int(df["oldpeak"].max()))
+    ca = st.slider("Creatinine Amnokinase", int(df["ca"].min()), int(df["ca"].max()))
+    trestbps = st.slider("Rest Blood Pressure", int(df["trestbps"].min()), int(df["trestbps"].max()))
+    anemia = st.slider("Anaemia", int(df["anaemia"].min()), int(df["anaemia"].max()))
     crp = st.slider("Creatinine Phosphokinase", int(df["creatinine_phosphokinase"].min()), int(df["creatinine_phosphokinase"].max()))
     diab = st.slider("Diabetes", int(df["diabetes"].min()), int(df["diabetes"].max()))
     ef = st.slider("Ejection Fraction", int(df["ejection_fraction"].min()), int(df["ejection_fraction"].max()))
@@ -48,7 +56,61 @@ def app(df, X, y):
     smok = st.slider("Smoking", int(df["smoking"].min()), int(df["smoking"].max()))
 
     # Create a list to store all the features
-    features = [age, gen, cp, chol, fbs, restecg, thalach,exang,slope,oldpeak, ca, thal, anemia, crp, diab, ef, plat, sc, ss, smok]
+    features = [age, gen, cp, chol, fbs, thalach,exang,slope,oldpeak, ca, trestbps, anemia, crp, diab, ef, plat, sc, ss, smok]
+
+    st.header("The values entered by user")
+    st.cache_data()
+    df3 = pd.DataFrame(features).transpose()
+    df3.columns=['age','gen','cp','chol','fbs','thalach','exang','slope','oldpeak','ca','trestbps','anemia','crp','diab','ef','plat','sc','ss','smok']
+    st.dataframe(df3)
+
+    st.info("Reference parameters for combined cardiac study (ECG + Blood Test + Holter-Monitoring)")
+    col1,col2,col3,col4 = st.columns(4)
+    with col1:
+        components.html( """
+                <style>body{font-family:"Source Sans Pro", sans-serif;}</style>
+                            <li>Age</li>
+                            <li>Gender</li>
+                            <li>Chest Pain</li>
+                            <li>Cholesterol Level</li>
+                            <li>Fasting Blood Sugar</li>
+                                                        <br>
+                    """)
+        
+        with col2:
+            components.html( """
+                    <style>body{font-family:"Source Sans Pro", sans-serif;}</style>
+                                <li>Resting ECG</li>
+                                <li>Maximum Heart Rate</li>
+                                <li>Exercise Induced Angina</li>
+                                <li>Slope Constant</li>
+                                <li>Rest induced dip in beat rate</li>
+                                <br>
+                        """)
+            
+        with col3:
+            components.html( """
+                    <style>body{font-family:"Source Sans Pro", sans-serif;}</style>
+                                <li>Creatinine Amnokinase</li>
+                                <li>Heart Constriction Value</li>
+                                <li>Anaemia</li>
+                                <li>Creatinine Phosphokinase</li>
+                                <li>Diabetes</li>
+                                                            <br>
+                        """)
+            
+        with col4:
+            components.html( """
+                    <style>body{font-family:"Source Sans Pro", sans-serif;}</style>
+                                <li>Ejection Fraction Value</li>
+                                <li>Platelet Count</li>
+                                <li>Serum Creatinine Level</li>
+                                <li>Serum Sodium Level</li>
+                                <li>Smoking or Non-smoking</li>
+                                                            <br>
+                        """)
+
+    st.sidebar.info("Cardiac Arrest / Coronary Thrombosis is majorly detected from Rest Blood Pressure, Chest Pain, Exercise Induced Angina and Max Heart Rate")
 
     # Create a button to predict
     if st.button("Predict"):
@@ -57,9 +119,24 @@ def app(df, X, y):
         score = score+0.11
         st.info("Predicted Sucessfully...")
 
+        
+
         # Print the output according to the prediction
         if (prediction == 1):
-            st.warning("The person is prone to get cardiac arrest!!")
+            st.error("The person is prone to get cardiac arrest!!")
+            if(trestbps > 130 or cp>2):
+                st.warning("Mild risk of a heart attack")
+                st.write("Chest Pain",cp,"High Blood Pressure",trestbps)
+
+            if(exang == 1):
+                st.info("Exercise Induced Angina is observed. It is a cause of heart attack")
+            elif (thalach > 125):
+                st.info("Max Heart Rate is very high. Changes of Cadiac Arrest!⚠️")
+                st.write(thalach)
+
+
+
+            
         else:
             st.success("The person is relatively safe from cardiac arrest")
 

@@ -8,7 +8,7 @@ from sklearn.tree import DecisionTreeClassifier
 import streamlit as st
 
 
-@st.cache()
+@st.cache_data()
 def load_data():
     """This function returns the preprocessed data"""
 
@@ -18,12 +18,12 @@ def load_data():
     # Rename the column names in the DataFrame.
     
     # Perform feature and target split
-    X = df[["age", "sex", "cp", "chol", "fbs", "restecg","thalach","exang","oldpeak","slope","ca","thal","anaemia","creatinine_phosphokinase","diabetes","ejection_fraction","platelets","serum_creatinine","serum_sodium","smoking"]]
+    X = df[["age", "sex", "cp", "chol", "fbs", "thalach","exang","oldpeak","slope","ca","trestbps","anaemia","creatinine_phosphokinase","diabetes","ejection_fraction","platelets","serum_creatinine","serum_sodium","smoking"]]
     y = df['target']
 
     return df, X, y
 
-@st.cache()
+@st.cache_data()
 def train_model(X, y):
     """This function trains the model and return the model and model score"""
     # Create the model
