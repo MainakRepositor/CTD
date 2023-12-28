@@ -129,7 +129,7 @@ def app(df, X, y):
             st.warning("High level of Cholesterol. Risk of Cardiac Arrest. Cholesterol Level : " + chol)
         
         elif(cp > 2):
-            st.warning("High Risk of Cardiac Arrest. Chest pain" + (str(cp)) + "is greater than usual")
+            st.warning("High Risk of Cardiac Arrest. Chest pain level : " + (str(cp)) + "is greater than usual")
         
         elif (ef > 40):
             st.error ("High risk of blood clogging and arterial rupture. Angioplasty is required!")
