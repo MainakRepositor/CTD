@@ -126,13 +126,13 @@ def app(df, X, y):
             st.warning("Mild risk of a heart attack")
             st.write("Chest Pain",cp,"High Blood Pressure",trestbps)
         elif(chol > 250):
-            st.warning("High level of Cholesterol. Risk of Cardiac Arrest)
+            st.warning("High level of Cholesterol. Risk of Cardiac Arrest. Cholesterol Level : " + chol)
         
         elif(cp > 2):
-            st.warning("High Risk of Cardiac Arrest. Chest pain + (str(cp)) + is greater than usual)
+            st.warning("High Risk of Cardiac Arrest. Chest pain" + (str(cp)) + "is greater than usual")
         
         elif (ef > 40):
-            st.error ("High risk of blood clogging and arterial rupture. Angioplasty is required!)
+            st.error ("High risk of blood clogging and arterial rupture. Angioplasty is required!")
 
         elif (ss > 131):
             st.error("High risk of blood pressure rise and stage 2 attacks. Sodium amount is high in blood. Please reduce salt in diet")
