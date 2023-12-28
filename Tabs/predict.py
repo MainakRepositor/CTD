@@ -138,7 +138,7 @@ def app(df, X, y):
             st.error("High risk of blood pressure rise and stage 2 attacks. Sodium amount is high in blood. Please reduce salt in diet")
                        
         elif(exang == 1):
-            st.info("Exercise Induced Angina is observed. It is a cause of heart attack")
+            st.error("Exercise Induced Angina is observed. It is a cause of heart attack")
         elif (thalach > 125):
             st.info("Max Heart Rate is very high. Changes of Cadiac Arrest!⚠️")
             st.write(thalach)
