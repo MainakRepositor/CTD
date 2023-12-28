@@ -122,17 +122,26 @@ def app(df, X, y):
         
 
         # Print the output according to the prediction
-        if (prediction == 1):
-            st.error("The person is prone to get cardiac arrest!!")
-            if(trestbps > 130 or cp>2):
-                st.warning("Mild risk of a heart attack")
-                st.write("Chest Pain",cp,"High Blood Pressure",trestbps)
+        if(trestbps > 130):
+            st.warning("Mild risk of a heart attack")
+            st.write("Chest Pain",cp,"High Blood Pressure",trestbps)
+        elif(chol > 250):
+            st.warning("High level of Cholesterol. Risk of Cardiac Arrest)
+        
+        elif(cp > 2):
+            st.warning("High Risk of Cardiac Arrest. Chest pain + (str(cp)) + is greater than usual)
+        
+        elif (ef > 40):
+            st.error ("High risk of blood clogging and arterial rupture. Angioplasty is required!)
 
-            if(exang == 1):
-                st.info("Exercise Induced Angina is observed. It is a cause of heart attack")
-            elif (thalach > 125):
-                st.info("Max Heart Rate is very high. Changes of Cadiac Arrest!⚠️")
-                st.write(thalach)
+        elif (ss > 131):
+            st.error("High risk of blood pressure rise and stage 2 attacks. Sodium amount is high in blood. Please reduce salt in diet")
+                       
+        elif(exang == 1):
+            st.info("Exercise Induced Angina is observed. It is a cause of heart attack")
+        elif (thalach > 125):
+            st.info("Max Heart Rate is very high. Changes of Cadiac Arrest!⚠️")
+            st.write(thalach)
 
 
 
