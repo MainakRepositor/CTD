@@ -32,10 +32,6 @@ def app(df, X, y):
         ax.set_ylim(bottom + 0.5, top - 0.5)                    # Increasing the bottom and decreasing the top margins respectively.
         st.pyplot(fig)
 
-    if st.checkbox("Resting ECG vs Age Plot"):
-        sns.color_palette("rocket", as_cmap=True)
-        ax=sns.scatterplot(x="age",y="restecg",data=df)
-        st.pyplot()
 
     if st.checkbox("Show Sample Results"):
         safe = (df['target'] == 0).sum()
